@@ -10,16 +10,25 @@
 ### Using URLs to perform CRUD operations.
 There are two endpoints that implement the CRUD operations.
 There are four added arguments that facilitate the functioning. Will be further explained in the end-points section.
-  1. "record"
-  2. "filter"
-  3. "update"
-  4. "replacedby"
+  1. "record" //used to create a new document
+  2. "filter" //used to set up the filter for querying the database
+  3. "update" //used to set up the update query in the database
+  4. "replacedby" //used to set up the replacedby query in the database
   
-#### End Points
-1. /products/ --> This endpoint can be used to view, delete, or update the product documents.  
+### End Points
+#### /products/ --> This endpoint can be used to view, delete, or update the product documents.  
   a) View One Product Document  
-  b) Delete One Product Document  
+  http://localhost:5000/products/ -d "filter= brand_name:jellycat; name:Jellycat Blossom Tulip Bunny Grabber, Pink" -X GET  
+  
+  b) Delete One Product Document
+  http://localhost:5000/products/ -d "filter= brand_name:jellycat; name:Jellycat Blossom Tulip Bunny Grabber, Pink" -X DELETE  
+  
   c) Update One Product Document  
-2. /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another.  
-  a)Create and Insert One Product Document  
+  http://localhost:5000/products/ -d "filter= brand_name:jellycat; name:Jellycat Blossom Tulip Bunny Grabber, Pink" -d "update= inc> regular_price_value:50; offer_price_value:25" -X GET  
+  
+#### /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another.  
+  a)Create and Insert One Product Document
+  http://localhost:5000/create/ -d "record= brand_name:glammy soaps; name: peach extract soap; regular_price_value: 1000; offer_price_value: 990" -X POST
+
   b)Replace One Product Document by Another  
+  http://localhost:5000/create/ -d "filter= brand_name:glammy soaps" -d "replacedby= brand_name: glammy; name: soap soap" -X PUT

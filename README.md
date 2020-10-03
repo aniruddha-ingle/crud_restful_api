@@ -16,6 +16,6 @@ There are four added arguments that facilitate the functioning. Will be further 
   a) View One Product Document  
   b) Delete One Product Document  
   c) Update One Product Document  
-2. /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another. 
+2. /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another.  
   a)Create and Insert One Product Document  
   b)Replace One Product Document by Another  

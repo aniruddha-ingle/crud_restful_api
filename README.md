@@ -1,7 +1,9 @@
 # greendeck_interview (Submission Status: In Progress)
-//Submission Status will be changed to READY when it is ready for your evaluation
-//Code file is functional, but documentation is in progress and some more functionalities may be added.
-This is Aniruddha Ingle's submission for the SDE/DS internship role.
+//Submission Status will be changed to READY when it is ready for your evaluation  
+//Code file is functional, but documentation is in progress and some more functionalities may be added.  
+### This is Aniruddha Ingle's submission for the SDE/DS internship role.  
+
+### Introduction
 - Atlas (MongoDB) was used to host the product data.
 
 ### Using URLs to perform CRUD operations.

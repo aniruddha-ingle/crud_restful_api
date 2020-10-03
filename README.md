@@ -17,18 +17,18 @@ There are four added arguments that facilitate the functioning. Will be further 
   
 ### End Points
 #### /products/ --> This endpoint can be used to view, delete, or update the product documents.  
-  a) View One Product Document  
+  a) View One Product Document    
   http://localhost:5000/products/ -d "filter= brand_name:jellycat; name:Jellycat Blossom Tulip Bunny Grabber, Pink" -X GET  
   
-  b) Delete One Product Document
+  b) Delete One Product Document  
   http://localhost:5000/products/ -d "filter= brand_name:jellycat; name:Jellycat Blossom Tulip Bunny Grabber, Pink" -X DELETE  
   
-  c) Update One Product Document  
+  c) Update One Product Document    
   http://localhost:5000/products/ -d "filter= brand_name:jellycat; name:Jellycat Blossom Tulip Bunny Grabber, Pink" -d "update= inc> regular_price_value:50; offer_price_value:25" -X GET  
   
 #### /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another.  
-  a)Create and Insert One Product Document
+  a)Create and Insert One Product Document  
   http://localhost:5000/create/ -d "record= brand_name:glammy soaps; name: peach extract soap; regular_price_value: 1000; offer_price_value: 990" -X POST
 
-  b)Replace One Product Document by Another  
+  b)Replace One Product Document by Another    
   http://localhost:5000/create/ -d "filter= brand_name:glammy soaps" -d "replacedby= brand_name: glammy; name: soap soap" -X PUT

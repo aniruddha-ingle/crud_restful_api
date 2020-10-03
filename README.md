@@ -10,11 +10,12 @@ There are four added arguments that facilitate the functioning. Will be further 
   2. "filter"
   3. "update"
   4. "replacedby"
+  
 #### End Points
-1. /products/ --> This endpoint can be used to view, delete, or update the product documents.
-  a) View One Product Document 
-  b) Delete One Product Document
-  c) Update One Product Document
+1. /products/ --> This endpoint can be used to view, delete, or update the product documents.  
+  a) View One Product Document  
+  b) Delete One Product Document  
+  c) Update One Product Document  
 2. /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another. 
-  a)Create and Insert One Product Document
-  b)Replace One Product Document by Another
+  a)Create and Insert One Product Document  
+  b)Replace One Product Document by Another  

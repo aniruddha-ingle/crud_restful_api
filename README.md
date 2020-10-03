@@ -5,6 +5,8 @@
 
 ### Introduction
 - Atlas (MongoDB) was used to host the product data.
+- Flask, Flask_Restful are used to implement the RESTful API
+- 
 
 ### Using URLs to perform CRUD operations.
 There are two endpoints that implement the CRUD operations.

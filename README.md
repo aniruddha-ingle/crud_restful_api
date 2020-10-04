@@ -10,7 +10,8 @@
 ### Set Up
 
 1. Download the zip file
-2. Docker Commands   
+2. Unzip the file which should give you a directory called 'greendeck_interview-main'
+3. Open a terminal from that directory and enter the following docker commands (make sure you have docker intsalled)   
 ```
 sudo docker build --tag greendeck_interview-main .
 sudo docker run --name greendeck_interview-main -p 5000:5000 dockerize_flask_api

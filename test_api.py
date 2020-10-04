@@ -74,21 +74,18 @@ parser.add_argument('update')
 parser.add_argument('replacedby')
 
 #View, Delete, or Update Product Documents
-class Products(Resource):
-    
+class Product(Resource):
     def get(self):
         """
         It is important to note that the default status of the GET function is not
         functional for handling spaces in query fields like "name" in the product 
         documents.
         Please specify -X GET after the URL.
-
         Returns
         -------
         result : json
             A database read is performed based on a string query found in args['filter']
             This result is converted to json and returned.
-
         """
         args = parser.parse_args()
         search_key = args['filter']
@@ -118,8 +115,8 @@ class Products(Resource):
         """
         Returns
         -------
-        "1 product was updated" iff a product was deleted
-        "0 product was updated" iff a product was not deleted
+        "1 product was updated" iff a product was updated
+        "0 product was updated" iff a product was not updated
         """
         args = parser.parse_args()
         search_key = args['filter']
@@ -131,6 +128,72 @@ class Products(Resource):
         d_update[s[0]] = d_up
         update_res = products.update_one(d_find,d_update)
         return '{} product was updated'.format(update_res.modified_count)
+
+class Products(Resource):
+    
+    def get(self):
+        """
+        It is important to note that the default status of the GET function is not
+        functional for handling spaces in query fields like "name" in the product 
+        documents.
+        Please specify -X GET after the URL.
+
+        Returns
+        -------
+        result : json
+            A database read is performed based on a string query found in args['filter']
+            This result is converted to json and returned. This allows multiple records
+            to be displayed.
+
+        """
+        args = parser.parse_args()
+        search_key = args['filter']
+        d_find = string_util_one(search_key)
+        cur = products.find(d_find) ###CHECK CHECK
+        response = list(cur)
+        if len(response) == 0:
+            abort(404, message="No Results for the applied filter")
+        out = {}
+        doc_count = 0
+        for doc in response:
+            
+            if '_id' in doc.keys():
+                del doc['_id']
+            out[doc_count] = doc
+            doc_count += 1
+        result = json.dumps(out)
+        return result
+    
+    def delete(self): #delete
+        """
+        Returns
+        -------
+        "n products were deleted" iff n products are deleted
+        "0 products were deleted" iff 0 products were deleted
+        """
+        args = parser.parse_args()
+        search_key = args['filter']
+        d_find = string_util_one(search_key)
+        del_res = products.delete_many(d_find)
+        return '{} products were deleted'.format(del_res.deleted_count)
+    
+    def put(self): #update
+        """
+        Returns
+        -------
+        "n products were updated" iff n products were updated
+        "0 products were updated" iff 0 products were updated
+        """
+        args = parser.parse_args()
+        search_key = args['filter']
+        d_find = string_util_one(search_key)   
+        s = args['update'].split('>')
+        s[0] = '$'+s[0].strip()
+        d_up = string_util_one(s[1])
+        d_update = {}
+        d_update[s[0]] = d_up
+        update_res = products.update_many(d_find,d_update)
+        return '{} products were updated'.format(update_res.modified_count)
 
 #Create or Replace Product Documents
 class Create(Resource):
@@ -167,6 +230,7 @@ class Create(Resource):
 ##
 api.add_resource(Create, '/create/')
 api.add_resource(Products, '/products/')
+api.add_resource(Product, '/oneproduct/')
 
 
 

@@ -10,10 +10,12 @@
 ### Set Up
 
 1. Download the zip file
-2. Docker Commands 
-'''
+2. Docker Commands   
+```
 sudo docker build --tag dockerize_flask_api .
-'''
+sudo docker run --name dockerize_flask_api -p 5000:5000 dockerize_flask_api
+
+```
 
 ### Using URLs to perform CRUD operations.
 There are two endpoints that implement the CRUD operations.

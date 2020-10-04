@@ -12,8 +12,8 @@
 1. Download the zip file
 2. Docker Commands   
 ```
-sudo docker build --tag dockerize_flask_api .
-sudo docker run --name dockerize_flask_api -p 5000:5000 dockerize_flask_api
+sudo docker build --tag greendeck_interview-main .
+sudo docker run --name greendeck_interview-main -p 5000:5000 dockerize_flask_api
 
 ```
 

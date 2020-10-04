@@ -7,6 +7,14 @@
 - Atlas (MongoDB) was used to host the product data.
 - Flask, Flask_Restful are used to implement the RESTful API
 
+### Set Up
+
+1. Download the zip file
+2. Docker Commands 
+'''
+sudo docker build --tag dockerize_flask_api .
+'''
+
 ### Using URLs to perform CRUD operations.
 There are two endpoints that implement the CRUD operations.
 There are four added arguments that facilitate the functioning. Will be further explained in the end-points section.

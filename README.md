@@ -56,7 +56,7 @@ There are four added arguments that facilitate the functioning. Will be further 
   
 #### /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another.  
   a)Create and Insert One Product Document     
-  http://localhost:5000/create/ -d 'record={"brand_name":"glammy soaps","name":"peach extract soap","regular_price_value":"1000","offer_price_value":"990"}' -X POST   
+  http://localhost:5000/create/ -d 'record={"brand_name":"glammy soaps","name":"peach extract soap","regular_price_value":"1000","offer_price_value":"990"}' -X POST      
   ![create operation](Screenshots/create%20operation.PNG)
 
   b)Replace One Product Document by Another    

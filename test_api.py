@@ -16,50 +16,27 @@ db = client.green_deck
 #access the collection 'gd_products' via the database instance
 products = db.gd_products
 
-##
-#Utility function to process the string passed in the url
-#Refer the read.me to understand how urls are passed
-#float_attrs are a list of attributes of the product that need type conversion
-##
-
-def string_util_one(query_string):
+def float_key_handler(insert_dict):
     """
     Parameters
     ----------
-    query_string : string
-        All queries must be string in REST APIs, these queries are held by the
-        query string.
+    insert_dict : dict
+        Dictionary form of query filter converted by json.loads()
 
     Returns
     -------
-    d : dictionary
-        All the queries to the mongodb database use filters which accept dictionaries. 
-        This utility function accepts a string query and maps it to a dictionary according
-        to some conventions stated in the readme.md file.
+    insert_dict : dict
+        Dictionary representing query folder with numeric fields converted to 
+        float
 
     """
-    if query_string == None:
-        abort(400 , 
-              message = 'Bad Request: Make sure you have used the correct argument,operation pair. Furthermore, make sure there is no space between the argument and the following equal to sign. Spaces after that are handled.')
-    
-    #In the above error message arguments refer to any one of the four added arguments
-    #E.g. record, filter, update, replacedby
-    #Each argument should be immediately followed by the equal to sign
-    #E.g. record=
-    #However, spaces in the quert after this equal to sign are handled.
-    
-    s = query_string.split(';')
-    d = {}
-    float_attrs = ['regular_price_value','offer_price_value']
-    for attr in s:
-        pair = attr.split(':')
-        if pair[0].strip() in float_attrs:
-            d[pair[0].strip()] = float(pair[1].strip())
-        else:
-            d[pair[0].strip()] = pair[1].strip()
-    return d
+    float_keys = ['regular_price_value','offer_price_value']
+    for key in insert_dict.keys():
+        if key in float_keys:
+            insert_dict[key] = float(insert_dict[key])
+    return insert_dict
+            
 
-##
 #Using reqparser to specify special arguments within the URL
 #'record' is used to create a document before inserting it in the database
 #'filter' is used to query the database
@@ -75,11 +52,12 @@ parser.add_argument('replacedby')
 
 #View, Delete, or Update Product Documents
 class Product(Resource):
+    """
+    This class which represents an endpoint is used to perform CURD operations or to view 
+    only one product document at a time.
+    """
     def get(self):
         """
-        It is important to note that the default status of the GET function is not
-        functional for handling spaces in query fields like "name" in the product 
-        documents.
         Please specify -X GET after the URL.
         Returns
         -------
@@ -88,9 +66,9 @@ class Product(Resource):
             This result is converted to json and returned.
         """
         args = parser.parse_args()
-        search_key = args['filter']
-        d_find = string_util_one(search_key)
-        response = products.find_one(d_find)
+        search_key = json.loads(args['filter'])
+        search_key = float_key_handler(search_key)
+        response = products.find_one(search_key)
         if response == None:
             abort(404, message="No Results for the applied filter")
         if '_id' in response.keys():
@@ -106,9 +84,9 @@ class Product(Resource):
         "0 product was deleted" iff a product was not deleted
         """
         args = parser.parse_args()
-        search_key = args['filter']
-        d_find = string_util_one(search_key)
-        del_res = products.delete_one(d_find)
+        search_key = json.loads(args['filter'])
+        search_key = float_key_handler(search_key)
+        del_res = products.delete_one(search_key)
         return '{} product was deleted'.format(del_res.deleted_count)
     
     def put(self): #update
@@ -119,18 +97,20 @@ class Product(Resource):
         "0 product was updated" iff a product was not updated
         """
         args = parser.parse_args()
-        search_key = args['filter']
-        d_find = string_util_one(search_key)   
-        s = args['update'].split('>')
-        s[0] = '$'+s[0].strip()
-        d_up = string_util_one(s[1])
-        d_update = {}
-        d_update[s[0]] = d_up
-        update_res = products.update_one(d_find,d_update)
+        search_key = json.loads(args['filter'])
+        search_key = float_key_handler(search_key)
+        update_key = json.loads(args['update'])
+        l = list(update_key.values())
+        key = list(update_key.keys())[0]
+        update_key[key] = float_key_handler(l[0])
+        update_res = products.update_one(search_key,update_key)
         return '{} product was updated'.format(update_res.modified_count)
 
 class Products(Resource):
-    
+    """
+    This class which represents an endpoint is used to perform CURD operations or view 
+    multiple products at a time.
+    """
     def get(self):
         """
         It is important to note that the default status of the GET function is not
@@ -147,16 +127,15 @@ class Products(Resource):
 
         """
         args = parser.parse_args()
-        search_key = args['filter']
-        d_find = string_util_one(search_key)
-        cur = products.find(d_find) ###CHECK CHECK
+        search_key = json.loads(args['filter'])
+        search_key = float_key_handler(search_key)
+        cur = products.find(search_key) ###CHECK CHECK
         response = list(cur)
         if len(response) == 0:
             abort(404, message="No Results for the applied filter")
         out = {}
         doc_count = 0
         for doc in response:
-            
             if '_id' in doc.keys():
                 del doc['_id']
             out[doc_count] = doc
@@ -172,9 +151,8 @@ class Products(Resource):
         "0 products were deleted" iff 0 products were deleted
         """
         args = parser.parse_args()
-        search_key = args['filter']
-        d_find = string_util_one(search_key)
-        del_res = products.delete_many(d_find)
+        search_key = json.loads(args['filter'])
+        del_res = products.delete_many(search_key)
         return '{} products were deleted'.format(del_res.deleted_count)
     
     def put(self): #update
@@ -185,19 +163,21 @@ class Products(Resource):
         "0 products were updated" iff 0 products were updated
         """
         args = parser.parse_args()
-        search_key = args['filter']
-        d_find = string_util_one(search_key)   
-        s = args['update'].split('>')
-        s[0] = '$'+s[0].strip()
-        d_up = string_util_one(s[1])
-        d_update = {}
-        d_update[s[0]] = d_up
-        update_res = products.update_many(d_find,d_update)
+        search_key = json.loads(args['filter'])
+        search_key = float_key_handler(search_key)
+        update_key = json.loads(args['update'])
+        l = list(update_key.values())
+        key = list(update_key.keys())[0]
+        update_key[key] = float_key_handler(l[0])
+        update_res = products.update_many(search_key,update_key)
         return '{} products were updated'.format(update_res.modified_count)
 
 #Create or Replace Product Documents
 class Create(Resource):
-
+    """
+    This class which represents an end point is used to insert or replace one product
+    document at a time.
+    """
     def post(self): #create/insert a new product document
         """
         Returns
@@ -206,9 +186,9 @@ class Create(Resource):
         This id is displayed as confirmation of insert operation.
         """
         args = parser.parse_args()
-        insert_string = args['record']
-        d_insert = string_util_one(insert_string)
-        in_res = products.insert_one(d_insert)
+        insert_dict = json.loads(args['record'])
+        insert_dict = float_key_handler(insert_dict)
+        in_res = products.insert_one(insert_dict)
         return 'Added Product has ID {}'.format(in_res.inserted_id), 201
     
     def put(self): #replace an existing product with a new product.
@@ -219,10 +199,11 @@ class Create(Resource):
         "0 product was replaced" iff a product matching the search filter was not found
         """
         args = parser.parse_args()
-        search_key = args['filter']
-        d_find = string_util_one(search_key)
-        d_rep = string_util_one(args['replacedby'])
-        rep_res = products.replace_one(d_find,d_rep)
+        search_key = json.loads(args['filter'])
+        search_key = float_key_handler(search_key)
+        replace_key = json.loads(args['replacedby'])
+        search_key = float_key_handler(search_key)
+        rep_res = products.replace_one(search_key,replace_key)
         return '{} product was replaced'.format(rep_res.modified_count)
 
 ##
@@ -235,4 +216,6 @@ api.add_resource(Product, '/oneproduct/')
 
 
 if __name__ == '__main__':
-        app.run(debug=True)
+        app.run(debug=True, host = '0.0.0.0')
+        
+        

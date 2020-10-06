@@ -60,4 +60,4 @@ There are four added arguments that facilitate the functioning. Will be further 
 
   b)Replace One Product Document by Another    
   http://localhost:5000/create/ -d 'filter={"brand_name":"glammy soaps"}' -d 'replacedby={"brand_name":"glammy";"name":"soap soap"}' -X PUT
-  ![](Screenshots/replace%20operation.PNG)
+  ![here?](Screenshots/replace%20operation.PNG)

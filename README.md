@@ -14,7 +14,7 @@
 3. Open a terminal from that directory and enter the following docker commands (make sure you have docker intsalled)   
 ```
 sudo docker build --tag greendeck_interview-main .
-sudo docker run --name greendeck_interview-main -p 5000:5000 dockerize_flask_api
+sudo docker run --name greendeck_interview-main -p 5000:5000 greendeck_interview-main
 
 ```
 

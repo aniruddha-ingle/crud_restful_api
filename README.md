@@ -27,7 +27,7 @@ There are four added arguments that facilitate the functioning. Will be further 
   4. "replacedby" //used to set up the replacedby query in the database
   
 ### End Points  
-(Note if you are seeing alt-text instead of image then go to screenshot folder and find image with name = alt-text)
+(Note: If you are seeing alt-text instead of image then go to screenshot folder and find image with name = alt-text)
 #### /oneproduct/ --> This endpoint can be used to view, delete, or update one product document per operation.  
   a) View One Product Document    
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat","name":"Jellycat Blossom Tulip Bunny Grabber, Pink"}' -X GET  

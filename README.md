@@ -26,38 +26,39 @@ There are four added arguments that facilitate the functioning. Will be further 
   3. "update" //used to set up the update query in the database
   4. "replacedby" //used to set up the replacedby query in the database
   
-### End Points
+### End Points  
+(Note if you are seeing alt-text instead of image then go to screenshot folder and find image with name = alt-text)
 #### /oneproduct/ --> This endpoint can be used to view, delete, or update one product document per operation.  
   a) View One Product Document    
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat","name":"Jellycat Blossom Tulip Bunny Grabber, Pink"}' -X GET  
-  ![Single View Screenshot](Screenshots/one%20product%20get%20operation.PNG)  
+  ![one product get operation](Screenshots/one%20product%20get%20operation.PNG)  
   
   b) Delete One Product Document  
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat";"name":"Jellycat Blossom Tulip Bunny Grabber, Pink"}' -X DELETE  
-  ![Single Delete Screenshot](Screenshots/one%20product%20delete%20operation.PNG)  
+  ![one product delete operation](Screenshots/one%20product%20delete%20operation.PNG)  
   
   c) Update One Product Document    
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat";"name":"Jellycat Blossom Tulip Bunny Grabber, Pink"}' -d 'update={"$inc":{"regular_price_value":"50", "offer_price_value":"25"}' -X PUT    
-  ![Single Update Screenshot](Screenshots/one%20product%20update%20operation.PNG)  
+  ![one product update operation](Screenshots/one%20product%20update%20operation.PNG)  
   
 #### /products/ --> This endpoint can be used to view, delete, or update multiple product documents per operation.  
   a) View Multiple Product Documents    
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat"}' -X GET   
-  ![Multi Get Screenshot](Screenshots/multiple%20products%20get%20operation.PNG)
+  ![multiple products get operation](Screenshots/multiple%20products%20get%20operation.PNG)
   
   b) Delete Multiple Product Documents  
   http://localhost:5000/products/ -d 'filter={"brand_name":"jellycat"}' -X DELETE   
-  ![Multi Delete Screenshot](Screenshots/multiple%20products%20delete%20operation.PNG)
+  ![multiple products delete operation](Screenshots/multiple%20products%20delete%20operation.PNG)
   
   c) Update Multiple Product Documents    
   http://localhost:5000/products/ -d 'filter={"brand_name":"jellycat"}' -d 'update={"regular_price_value":"50","offer_price_value":"25"} -X PUT     
-  ![Multi Update Screenshot](Screenshots/multiple%20products%20update%20operation.PNG)
+  ![multiple products update operation](Screenshots/multiple%20products%20update%20operation.PNG)
   
 #### /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another.  
   a)Create and Insert One Product Document     
   http://localhost:5000/create/ -d 'record={"brand_name":"glammy soaps","name":"peach extract soap","regular_price_value":"1000","offer_price_value":"990"}' -X POST   
-  ![Create Screenshot](Screenshots/create%20operation.PNG)
+  ![create operation](Screenshots/create%20operation.PNG)
 
   b)Replace One Product Document by Another    
   http://localhost:5000/create/ -d 'filter={"brand_name":"glammy soaps"}' -d 'replacedby={"brand_name":"glammy";"name":"soap soap"}' -X PUT  
-  ![Replace Screenshot](Screenshots/replace%20operation.PNG)
+  ![replace operation](Screenshots/replace%20operation.PNG)

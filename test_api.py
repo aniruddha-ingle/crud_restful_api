@@ -37,6 +37,7 @@ def float_key_handler(insert_dict):
     return insert_dict
             
 
+##
 #Using reqparser to specify special arguments within the URL
 #'record' is used to create a document before inserting it in the database
 #'filter' is used to query the database

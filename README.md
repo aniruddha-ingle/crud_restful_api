@@ -1,4 +1,4 @@
-# greendeck_interview (Submission Status: READY)
+# Restful API for CRUD Operations on MongoDB hosted on Atlas
 //Submission Status will be changed to READY when it is ready for your evaluation  
 //Code file is functional, but documentation is in progress and some more functionalities may be added.  
 ### This is Aniruddha Ingle's submission for the SDE/DS internship role.  
@@ -30,15 +30,21 @@ There are four added arguments that facilitate the functioning. Will be further 
 (Note: If you are seeing alt-text instead of image then go to screenshot folder and find image with name = alt-text)
 #### /oneproduct/ --> This endpoint can be used to view, delete, or update one product document per operation.  
   a) View One Product Document    
+  ```
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat","name":"Jellycat Blossom Tulip Bunny Grabber, Pink"}' -X GET  
+  ```
   ![one product get operation](Screenshots/one%20product%20get%20operation.PNG)  
   
+  ```
   b) Delete One Product Document  
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat","name":"Jellycat Blossom Tulip Bunny Grabber, Pink"}' -X DELETE  
+  ```
   ![one product delete operation](Screenshots/one%20product%20delete%20operation.PNG)  
   
   c) Update One Product Document    
+  ```
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat","name":"Jellycat Blossom Tulip Bunny Grabber, Pink"}' -d 'update={"$inc":{"regular_price_value":"50", "offer_price_value":"25"}' -X PUT    
+  ```
   ![one product update operation](Screenshots/one%20product%20update%20operation%20inc.PNG)  
   
 #### /products/ --> This endpoint can be used to view, delete, or update multiple product documents per operation.  

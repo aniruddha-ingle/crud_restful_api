@@ -1,6 +1,4 @@
 # Restful API for CRUD Operations on MongoDB hosted on Atlas
-//Submission Status will be changed to READY when it is ready for your evaluation  
-//Code file is functional, but documentation is in progress and some more functionalities may be added.   
 
 ### Introduction
 - Atlas (MongoDB) was used to host the product data.

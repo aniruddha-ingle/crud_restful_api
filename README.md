@@ -1,7 +1,6 @@
 # Restful API for CRUD Operations on MongoDB hosted on Atlas
 //Submission Status will be changed to READY when it is ready for your evaluation  
-//Code file is functional, but documentation is in progress and some more functionalities may be added.  
-### This is Aniruddha Ingle's submission for the SDE/DS internship role.  
+//Code file is functional, but documentation is in progress and some more functionalities may be added.   
 
 ### Introduction
 - Atlas (MongoDB) was used to host the product data.
@@ -10,7 +9,7 @@
 ### Set Up
 
 1. Download the zip file
-2. Unzip the file which should give you a directory called 'greendeck_interview-main'
+2. Unzip the file which should give you a directory called 'crud_restful_api-main'
 3. Open a terminal from that directory and enter the following docker commands (make sure you have docker intsalled)   
 ```
 sudo docker build --tag greendeck_interview-main .
@@ -49,22 +48,32 @@ There are four added arguments that facilitate the functioning. Will be further 
   
 #### /products/ --> This endpoint can be used to view, delete, or update multiple product documents per operation.  
   a) View Multiple Product Documents    
+  ```
   http://localhost:5000/oneproduct/ -d 'filter={"brand_name":"jellycat"}' -X GET   
+  ```
   ![multiple products get operation](Screenshots/multiple%20products%20get%20operation.PNG)
   
   b) Delete Multiple Product Documents  
+  ```
   http://localhost:5000/products/ -d 'filter={"brand_name":"jellycat"}' -X DELETE   
+  ```
   ![multiple products delete operation](Screenshots/multiple%20products%20delete%20operation.PNG)
   
   c) Update Multiple Product Documents    
+  ```
   http://localhost:5000/products/ -d 'filter={"brand_name":"jellycat"}' -d 'update={"regular_price_value":"50","offer_price_value":"25"} -X PUT     
+  ```
   ![multiple products update operation](Screenshots/multiple%20products%20update%20operation.PNG)
   
 #### /create/ --> This endpoint can be used to create a new product document or replace an existing product document with another.  
   a)Create and Insert One Product Document     
+  ```
   http://localhost:5000/create/ -d 'record={"brand_name":"glammy soaps","name":"peach extract soap","regular_price_value":"1000","offer_price_value":"990"}' -X POST      
+  ```
   ![create operation](Screenshots/create%20operation.PNG)
 
   b)Replace One Product Document by Another    
+  ```
   http://localhost:5000/create/ -d 'filter={"brand_name":"glammy soaps"}' -d 'replacedby={"brand_name":"glammy";"name":"soap soap"}' -X PUT  
+  ```
   ![replace operation](Screenshots/replace%20operation.PNG)

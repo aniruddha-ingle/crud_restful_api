@@ -214,6 +214,7 @@ api.add_resource(Create, '/create/')
 api.add_resource(Products, '/products/')
 api.add_resource(Product, '/oneproduct/')
 
+#Cleaning up code.
 
 
 if __name__ == '__main__':
